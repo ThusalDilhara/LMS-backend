@@ -1,8 +1,6 @@
 package com.bodima.project_lms.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,6 +10,8 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Document(collection = "course")
 public class CourseEntity {
 
@@ -20,6 +20,7 @@ public class CourseEntity {
     private String title;
     private String description;
     private String instructor;
+    private Integer instructorId;
     private String catagoty;
     private String level; // intermediate,beginner,advanced
     private Set<String> modules;
@@ -32,5 +33,6 @@ public class CourseEntity {
     private String reviewForCourse;
     private Double rating;
     private String status;
+
 }
 
