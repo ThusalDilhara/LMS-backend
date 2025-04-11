@@ -1,5 +1,8 @@
 package com.bodima.project_lms.config;
 
+import com.bodima.project_lms.exceptionhandling.CustomAccessDeniedHandler;
+import com.bodima.project_lms.exceptionhandling.CustomBasicAuthenticationEntryPoint;
+import com.bodima.project_lms.filter.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +31,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class ProjectSecurityProdConfig {
 
     @Bean
-    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception{
+    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         CsrfTokenRequestAttributeHandler csrfTokenRequestAttributeHandler = new CsrfTokenRequestAttributeHandler();
         http.sessionManagement(sessionConfig -> sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).cors(corsConfig -> corsConfig.configurationSource(new CorsConfigurationSource() {
                     @Override
@@ -42,7 +45,7 @@ public class ProjectSecurityProdConfig {
                         config.setMaxAge(3600L);
                         return config;
                     }
-                })).csrf(csrfConfig -> csrfConfig.csrfTokenRequestHandler(csrfTokenRequestAttributeHandler).ignoringRequestMatchers("/contact", "/register", "/apiLogin").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())).addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class).addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class).addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class).addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class).addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class).addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class).requiresChannel(rcc -> rcc.anyRequest().requiresSecure()) // Only HTTPS
+                })).csrf(csrfConfig -> csrfConfig.csrfTokenRequestHandler(csrfTokenRequestAttributeHandler).ignoringRequestMatchers("/contact", "/register", "/apiLogin").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())).addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class).addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class).addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class).addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class).addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class).addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)//.requiresChannel(rcc -> rcc.anyRequest().requiresSecure()) // Only HTTPS
                 .authorizeHttpRequests((requests) -> requests.requestMatchers("/myAccount").hasRole("USER").requestMatchers("/myBalance").hasAnyRole("USER", "ADMIN").requestMatchers("/myLoans").authenticated().requestMatchers("/myCards").hasRole("USER").requestMatchers("/user").authenticated().requestMatchers("/notices", "/contact", "/error", "/register", "/invalidSession", "/apiLogin").permitAll());
         http.formLogin(withDefaults());
         http.httpBasic(hbc -> hbc.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()));
