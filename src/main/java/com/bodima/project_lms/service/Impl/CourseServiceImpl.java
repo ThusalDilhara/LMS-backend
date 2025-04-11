@@ -68,7 +68,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getAllCourses() {
-        //TODO must be implemeted
+        List<Course> courseList = new ArrayList<>();
+        courseRepository.findAll().forEach(course ->
+                courseList.add(modelMapper.map(course,Course.class)));
     return null;
     }
 }
