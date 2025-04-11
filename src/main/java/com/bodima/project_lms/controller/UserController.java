@@ -3,7 +3,7 @@ package com.bodima.project_lms.controller;
 import com.bodima.project_lms.constants.ApplicationConstants;
 import com.bodima.project_lms.model.LoginRequestDTO;
 import com.bodima.project_lms.model.LoginResponseDTO;
-import com.bodima.project_lms.model.User;
+import com.bodima.project_lms.model.UserEntity;
 import com.bodima.project_lms.repository.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -37,12 +37,12 @@ public class UserController {
     private final Environment env;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody User user) {
+    public ResponseEntity<String> registerUser(@RequestBody UserEntity user) {
         try {
             String hashPwd = passwordEncoder.encode(user.getPassword());
             user.setPassword(hashPwd);
             user.setCreatedAt(new Date(System.currentTimeMillis()));
-            User savedUser = userRepository.save(user);
+            UserEntity savedUser = userRepository.save(user);
 
             if (savedUser.getId() > 0) {
                 return ResponseEntity.status(HttpStatus.CREATED).body("Given user details are successfully registered");
@@ -55,8 +55,8 @@ public class UserController {
     }
 
     @RequestMapping("/user")
-    public User getUserDetailsAfterLogin(Authentication authentication) {
-        Optional<User> optionalUser = userRepository.findByEmail(authentication.getName());
+    public UserEntity getUserDetailsAfterLogin(Authentication authentication) {
+        Optional<UserEntity> optionalUser = userRepository.findByEmail(authentication.getName());
         return optionalUser.orElse(null);
     }
 

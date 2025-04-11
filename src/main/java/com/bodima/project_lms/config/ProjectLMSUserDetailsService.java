@@ -1,6 +1,7 @@
 package com.bodima.project_lms.config;
 
 
+import com.bodima.project_lms.model.UserEntity;
 import com.bodima.project_lms.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,7 +23,7 @@ public class ProjectLMSUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        com.bodima.project_lms.model.User user = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("user details not found " + username));
+        UserEntity user = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("user details not found " + username));
         List<GrantedAuthority> authorities = user.getAuthorities().stream().map(authority -> new SimpleGrantedAuthority(authority.getAuthorityName())).collect(Collectors.toList());
         return new User(user.getEmail(), user.getPassword(), authorities);
     }

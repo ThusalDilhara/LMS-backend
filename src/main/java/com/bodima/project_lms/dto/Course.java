@@ -11,7 +11,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CourseDto {
+public class Course {
 
     @Id
     private Integer courseId;
