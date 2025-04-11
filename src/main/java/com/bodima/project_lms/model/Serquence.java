@@ -6,13 +6,14 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "authorities")
-@Data
+@Document(collection = "sequence")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Authority {
-
+@Data
+public class Serquence {
     @Id
     private String id;
-    private String authorityName;
+
+    private int sequence;
+
 }
