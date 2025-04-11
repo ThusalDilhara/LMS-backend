@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
 
@@ -14,7 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "course")
-public class Course {
+public class CourseEntity {
 
     @Id
     private Integer courseId;
