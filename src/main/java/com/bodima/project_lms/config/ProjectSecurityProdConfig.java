@@ -37,7 +37,7 @@ public class ProjectSecurityProdConfig {
                     @Override
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                         CorsConfiguration config = new CorsConfiguration();
-                        config.setAllowedOrigins(Collections.singletonList("https://localhost:4200"));
+                        config.setAllowedOrigins(Collections.singletonList("http://localhost:5173")); // https
                         config.setAllowedMethods(Collections.singletonList("*"));
                         config.setAllowCredentials(true);
                         config.setAllowedHeaders(Collections.singletonList("*"));
@@ -45,7 +45,7 @@ public class ProjectSecurityProdConfig {
                         config.setMaxAge(3600L);
                         return config;
                     }
-                })).csrf(csrfConfig -> csrfConfig.csrfTokenRequestHandler(csrfTokenRequestAttributeHandler).ignoringRequestMatchers("/contact", "/register", "/apiLogin").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())).addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class).addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class).addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class).addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class).addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class).addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class).requiresChannel(rcc -> rcc.anyRequest().requiresSecure()) // Only HTTPS
+                })).csrf(csrfConfig -> csrfConfig.csrfTokenRequestHandler(csrfTokenRequestAttributeHandler).ignoringRequestMatchers( "/register", "/apiLogin").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())).addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class).addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class).addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class).addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class).addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class).addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)//.requiresChannel(rcc -> rcc.anyRequest().requiresSecure()) // Only HTTPS
                 .authorizeHttpRequests((requests) -> requests.requestMatchers("/myAccount").hasRole("USER").requestMatchers("/myBalance").hasAnyRole("USER", "ADMIN").requestMatchers("/myLoans").authenticated().requestMatchers("/myCards").hasRole("USER").requestMatchers("/user").authenticated().requestMatchers("/notices", "/contact", "/error", "/register", "/invalidSession", "/apiLogin").permitAll());
         http.formLogin(withDefaults());
         http.httpBasic(hbc -> hbc.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()));
