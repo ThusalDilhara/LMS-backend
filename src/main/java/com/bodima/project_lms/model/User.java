@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Document(collection = "users")
 @Data
-public class Users {
+public class User {
     @Id
     private Integer id;
 
