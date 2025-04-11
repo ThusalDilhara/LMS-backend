@@ -14,12 +14,12 @@ import java.util.Set;
 public class Course {
 
     @Id
-    private Integer id;
+    private String id;
     private String title;
     private String description;
     private String instructor;
     private Integer instructorId; //TODO add key
-    private String catagoty;
+    private String catagory;
     private String level; // intermediate,beginner,advanced
     private Set<String> modules;
     private double price;

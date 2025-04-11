@@ -7,13 +7,13 @@ import java.util.List;
 public interface CourseService {
     void addCourse(Course course);
 
-    void deleteCourseById(Integer courseId);
+    void deleteCourseById(String courseId);
 
-    List<Course>getCoursesById(Integer courseId);
+    List<Course>getCoursesById(String courseId);
 
     List<Course> getCourcesByTitleOrCatagory(String title, String catagory);
 
-    List<Course> getCourcesByInstructorId(Integer id);
+    List<Course> getCourcesByInstructorId(String id);
 
     void enrollStudentForCourse(Integer studentId, Integer courseId);
 

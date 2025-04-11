@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.data.repository.util.ClassUtils.ifPresent;
+
 @Service
 @RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService {
@@ -25,22 +27,22 @@ public class CourseServiceImpl implements CourseService {
     public void addCourse(Course course) {
         CourseEntity courseEntity = modelMapper.map(course, CourseEntity.class);
 
-        if (courseEntity.getCourseId() == null) {
-            courseEntity.setCourseId(sequenceGenerator.getNextSequence(COURSE_SEQUENCE_NAME));
-        }
+//        if (courseEntity.getId() == null) {
+//            courseEntity.setId(sequenceGenerator.getNextSequence(COURSE_SEQUENCE_NAME));
+//        }
 
         courseRepository.save(modelMapper.map(course, CourseEntity.class));
     }
 
     @Override
-    public void deleteCourseById(Integer courseId) {
-        courseRepository.deleteById(courseId);
+    public void deleteCourseById(String id) {
+        courseRepository.deleteById(id);
     }
 
     @Override
-    public List<Course> getCoursesById(Integer courseId) {
+    public List<Course> getCoursesById(String courseId) {
         List<Course> courseList = new ArrayList<>();
-        courseRepository.findByCourseId(courseId).forEach(course ->
+        courseRepository.findById(courseId).ifPresent(course ->
                 courseList.add(modelMapper.map(course, Course.class)));
         return courseList;
     }
@@ -54,7 +56,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getCourcesByInstructorId(Integer id) {
+    public List<Course> getCourcesByInstructorId(String id) {
         List<Course> courseList = new ArrayList<>();
          courseRepository.findByInstructorId(id).forEach(course ->
                 courseList.add(modelMapper.map(course,Course.class)));
@@ -71,6 +73,6 @@ public class CourseServiceImpl implements CourseService {
         List<Course> courseList = new ArrayList<>();
         courseRepository.findAll().forEach(course ->
                 courseList.add(modelMapper.map(course,Course.class)));
-    return null;
+    return courseList;
     }
 }

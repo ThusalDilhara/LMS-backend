@@ -9,12 +9,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CourseRepository extends MongoRepository<CourseEntity,Integer> {
-
-    List<Course> findByCourseId(Integer courseId);
+public interface CourseRepository extends MongoRepository<CourseEntity,String> {
 
     List<Course> findByTitleOrCatagoty(String title, String catagory);
 
-    List<Course> findByInstructorId(Integer id);
+    List<Course> findByInstructorId(String id);
 
 }

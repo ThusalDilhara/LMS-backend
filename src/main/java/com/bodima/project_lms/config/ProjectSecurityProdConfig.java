@@ -6,6 +6,7 @@ import com.bodima.project_lms.filter.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.password.CompromisedPasswordChecker;
@@ -28,6 +29,7 @@ import java.util.Collections;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
+@Profile("prod")
 public class ProjectSecurityProdConfig {
 
     @Bean
@@ -45,7 +47,7 @@ public class ProjectSecurityProdConfig {
                         config.setMaxAge(3600L);
                         return config;
                     }
-                })).csrf(csrfConfig -> csrfConfig.csrfTokenRequestHandler(csrfTokenRequestAttributeHandler).ignoringRequestMatchers( "/register", "/apiLogin","/course/add-course","/course/get-all-courses").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())).addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class).addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class).addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class).addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class).addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class).addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)//.requiresChannel(rcc -> rcc.anyRequest().requiresSecure()) // Only HTTPS
+                })).csrf(csrfConfig -> csrfConfig.csrfTokenRequestHandler(csrfTokenRequestAttributeHandler).ignoringRequestMatchers( "/register", "/apiLogin","/course/add-course","/course/get-all-courses").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())).addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class).addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class).addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class).addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class).addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class).addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class).requiresChannel(rcc -> rcc.anyRequest().requiresSecure()) // Only HTTPS
                 .authorizeHttpRequests((requests) -> requests.requestMatchers("/myAccount").hasRole("USER").requestMatchers("/myBalance").hasAnyRole("USER", "ADMIN").requestMatchers("/myLoans").authenticated().requestMatchers("/myCards").hasRole("USER").requestMatchers("/user").authenticated().requestMatchers("/notices", "/contact", "/error", "/register", "/invalidSession", "/apiLogin","/course/add-course").permitAll());
         http.formLogin(withDefaults());
         http.httpBasic(hbc -> hbc.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()));

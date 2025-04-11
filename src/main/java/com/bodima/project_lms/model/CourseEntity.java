@@ -16,7 +16,7 @@ import java.util.Set;
 public class CourseEntity {
 
     @Id
-    private Integer courseId;
+    private String id;
     private String title;
     private String description;
     private String instructor;

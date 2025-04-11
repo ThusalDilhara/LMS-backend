@@ -32,7 +32,7 @@ public class CourseController {
     //delete course by id
     @DeleteMapping("/delete-course-by-id/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteCourseById(@PathVariable("id") Integer courseId) {
+    public void deleteCourseById(@PathVariable("id") String courseId) {
         courseService.deleteCourseById(courseId);
     }
 
@@ -46,7 +46,7 @@ public class CourseController {
     //get cources by id
     @GetMapping("get-course-by-id/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Course> getCoursesById(@PathVariable("id") Integer courseId) {
+    public List<Course> getCoursesById(@PathVariable("id") String courseId) {
         return courseService.getCoursesById(courseId);
     }
 
@@ -60,7 +60,7 @@ public class CourseController {
     //Get Courses by Instructor
     @GetMapping("set-all-cources-by-instructureId/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public List<Course> getCourcesByInstructorId(@PathVariable Integer id) {
+    public List<Course> getCourcesByInstructorId(@PathVariable String id) {
         return courseService.getCourcesByInstructorId(id);
     }
 
