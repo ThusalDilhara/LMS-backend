@@ -16,4 +16,5 @@ public class Serquence {
 
     private int sequence;
 
+
 }
