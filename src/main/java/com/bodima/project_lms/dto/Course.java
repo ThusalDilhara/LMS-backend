@@ -18,6 +18,7 @@ public class Course {
     private String title;
     private String description;
     private String instructor;
+    private String instructorId; //TODO add key
     private String catagoty;
     private String level; // intermediate,beginner,advanced
     private Set<String> modules;
