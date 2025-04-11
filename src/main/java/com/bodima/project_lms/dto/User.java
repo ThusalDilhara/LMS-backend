@@ -1,11 +1,10 @@
 package com.bodima.project_lms.dto;
 
-import com.bodima.project_lms.model.Authority;
+import com.bodima.project_lms.model.AuthorityEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 import java.util.Set;
@@ -32,6 +31,6 @@ public class User {
     private Date createdAt;
 
     @JsonIgnore
-    private Set<Authority> authorities;
+    private Set<AuthorityEntity> authorities;
 
 }

@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Document(collection = "users")
 @Data
-public class User {
+public class UserEntity {
     @Id
     private Integer id;
 
@@ -31,6 +31,6 @@ public class User {
     private Date createdAt;
 
     @JsonIgnore
-    private Set<Authority> authorities;
+    private Set<AuthorityEntity> authorities;
 
 }

@@ -3,6 +3,7 @@ package com.bodima.project_lms.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-//@Profile("prod")
+@Profile("prod")
 @RequiredArgsConstructor
 public class ProjectLMSProdUsernamePasswordAuthenticationProvider implements AuthenticationProvider {
 
