@@ -17,6 +17,7 @@ public class Course {
     private String id;
     private String title;
     private String description;
+    private String instructorTitle;
     private String instructor;
     private Integer instructorId; //TODO add key
     private String catagory;

@@ -19,6 +19,7 @@ public class CourseEntity {
     private String id;
     private String title;
     private String description;
+    private String instructorTitle;
     private String instructor;
     private Integer instructorId;
     private String catagoty;
