@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -32,5 +33,6 @@ public class Course {
     private String reviewForCourse;
     private Double rating;
     private String status;
+    private List<Lesson> lessons;
 
 }

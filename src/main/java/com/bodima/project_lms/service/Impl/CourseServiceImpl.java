@@ -1,6 +1,7 @@
 package com.bodima.project_lms.service.Impl;
 
 import com.bodima.project_lms.dto.Course;
+import com.bodima.project_lms.dto.LessonRequest;
 import com.bodima.project_lms.model.CourseEntity;
 import com.bodima.project_lms.repository.CourseRepository;
 import com.bodima.project_lms.service.CourseService;
@@ -22,6 +23,7 @@ public class CourseServiceImpl implements CourseService {
     private final ModelMapper modelMapper;
     private final SequenceGeneratorService sequenceGenerator;
     private static final String COURSE_SEQUENCE_NAME = "course_sequence";
+
 
     @Override
     public void addCourse(Course course) {
@@ -74,5 +76,10 @@ public class CourseServiceImpl implements CourseService {
         courseRepository.findAll().forEach(course ->
                 courseList.add(modelMapper.map(course,Course.class)));
     return courseList;
+    }
+
+    @Override
+    public Course addLesson(String courseId, LessonRequest lessonRequest, String token) {
+        return null;
     }
 }
