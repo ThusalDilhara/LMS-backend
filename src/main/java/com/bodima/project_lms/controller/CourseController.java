@@ -20,7 +20,7 @@ public class CourseController {
     private final CourseService courseService;
 
 
-    //Get all cources
+    //Add course
     @PostMapping("/add-course")
     @ResponseStatus(HttpStatus.CREATED)
     public void addCourse(@RequestBody Course course) {

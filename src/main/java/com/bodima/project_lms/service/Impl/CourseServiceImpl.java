@@ -24,16 +24,15 @@ public class CourseServiceImpl implements CourseService {
     private final SequenceGeneratorService sequenceGenerator;
     private static final String COURSE_SEQUENCE_NAME = "course_sequence";
 
-
     @Override
     public void addCourse(Course course) {
         CourseEntity courseEntity = modelMapper.map(course, CourseEntity.class);
 
-//        if (courseEntity.getId() == null) {
-//            courseEntity.setId(sequenceGenerator.getNextSequence(COURSE_SEQUENCE_NAME));
-//        }
+        if (courseEntity.getId() == null) {
+            courseEntity.setId(String.valueOf(sequenceGenerator.getNextSequence(COURSE_SEQUENCE_NAME)));
+        }
 
-        courseRepository.save(modelMapper.map(course, CourseEntity.class));
+        courseRepository.save(courseEntity);
     }
 
     @Override
@@ -52,7 +51,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getCourcesByTitleOrCatagory(String title, String catagory) {
         List<Course> courseList = new ArrayList<>();
-        courseRepository.findByTitleOrCatagoty(title, catagory).forEach(course ->
+        courseRepository.findByTitleOrCatagory(title, catagory).forEach(course ->
                 courseList.add(modelMapper.map(course, Course.class)));
         return List.of();
     }
@@ -80,6 +79,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course addLesson(String courseId, LessonRequest lessonRequest, String token) {
-        return null;
+        return null; //TODO must be completed some aws parts alos added  this is allovated to add local staarage
+
     }
 }
