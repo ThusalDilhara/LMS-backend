@@ -20,5 +20,4 @@ public interface CourseService {
 
     List<Course> getAllCourses();
 
-    Course addLesson(String courseId, LessonRequest lessonRequest, String token);
 }

@@ -9,11 +9,11 @@ import com.bodima.project_lms.service.SequenceGeneratorService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.springframework.data.repository.util.ClassUtils.ifPresent;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +23,7 @@ public class CourseServiceImpl implements CourseService {
     private final ModelMapper modelMapper;
     private final SequenceGeneratorService sequenceGenerator;
     private static final String COURSE_SEQUENCE_NAME = "course_sequence";
+
 
     @Override
     public void addCourse(Course course) {
@@ -59,27 +60,27 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getCourcesByInstructorId(String id) {
         List<Course> courseList = new ArrayList<>();
-         courseRepository.findByInstructorId(id).forEach(course ->
-                courseList.add(modelMapper.map(course,Course.class)));
-         return courseList;
+        courseRepository.findByInstructorId(id).forEach(course ->
+                courseList.add(modelMapper.map(course, Course.class)));
+        return courseList;
     }
 
     @Override
     public void enrollStudentForCourse(Integer studentId, Integer courseId) {
-    //TODO must be implemented
+        //TODO must be implemented
     }
 
     @Override
     public List<Course> getAllCourses() {
         List<Course> courseList = new ArrayList<>();
         courseRepository.findAll().forEach(course ->
-                courseList.add(modelMapper.map(course,Course.class)));
-    return courseList;
+                courseList.add(modelMapper.map(course, Course.class)));
+        return courseList;
     }
 
-    @Override
-    public Course addLesson(String courseId, LessonRequest lessonRequest, String token) {
-        return null; //TODO must be completed some aws parts alos added  this is allovated to add local staarage
+//    @Override
+//    public Course addLesson(String courseId, LessonRequest lessonRequest, MultipartFile file, String token) throws IOException {
+//        return null;
+//    }
 
-    }
 }

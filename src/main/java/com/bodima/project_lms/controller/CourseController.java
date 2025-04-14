@@ -1,14 +1,10 @@
 package com.bodima.project_lms.controller;
 
 import com.bodima.project_lms.dto.Course;
-import com.bodima.project_lms.dto.LessonRequest;
 import com.bodima.project_lms.service.CourseService;
-import com.bodima.project_lms.service.FileStorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -76,13 +72,8 @@ public class CourseController {
         courseService.enrollStudentForCourse(studentId, courseId);
     }
 
-    @PostMapping("/add-course-content/{id}/lessions")
-    public ResponseEntity<Course> addLessonToCourse(
-    @PathVariable String courseId,
-    @RequestBody LessonRequest lessonRequest,
-    @RequestHeader("Authorization") String token
-    ) {
-        Course updatedCourse = courseService.addLesson(courseId, lessonRequest, token);
-        return ResponseEntity.ok(updatedCourse);
-    }
+//    @PostMapping(value = "/{courseId}/lessons", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public ResponseEntity<Course> addLesson(
+//        return null;
+//    }
 }

@@ -16,4 +16,5 @@ public class Lesson {
     private String contentUrl; // URL to the file (S3, Firebase,local)
     private int durationMinutes; // For videos
     private int order; // To sort lessons sequentially
+    private String filePath;
 }
