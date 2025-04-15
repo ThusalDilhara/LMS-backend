@@ -15,7 +15,8 @@ public class CourseController {
 
     private final CourseService courseService;
 
-    //Get all cources
+
+    //Add course
     @PostMapping("/add-course")
     @ResponseStatus(HttpStatus.CREATED)
     public void addCourse(@RequestBody Course course) {
@@ -71,5 +72,8 @@ public class CourseController {
         courseService.enrollStudentForCourse(studentId, courseId);
     }
 
-
+//    @PostMapping(value = "/{courseId}/lessons", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public ResponseEntity<Course> addLesson(
+//        return null;
+//    }
 }
