@@ -16,6 +16,7 @@ public class Course {
 
     @Id
     private String id;
+    private String code;
     private String title;
     private String description;
     private String instructorTitle;
@@ -32,6 +33,7 @@ public class Course {
     private String resources;
     private String reviewForCourse;
     private Double rating;
+    private String prerequisites;
     private String status;
     private List<Lesson> lessons;
 
