@@ -19,6 +19,7 @@ public class CourseEntity {
 
     @Id
     private String id;
+    private String code;
     private String title;
     private String description;
     private String instructorTitle;
