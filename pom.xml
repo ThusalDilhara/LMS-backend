@@ -41,9 +41,9 @@
             <version>3.2.2</version>
         </dependency>
         <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-s3</artifactId>
-            <version>1.12.649</version> <!-- or the latest version -->
+            <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-http44</artifactId>
+            <version>1.32.0</version>
         </dependency>
 <!--        jwt new tolkens-->
 
