@@ -20,7 +20,7 @@ public class CourseAnnouncementsIServiceImpl implements CourseAnnouncementsServi
 
     private final CourseAnnouncementsRepository courseAnnouncementsRepository;
     private final ModelMapper modelMapper;
-    private Cloudinary cloudinary;
+    private final Cloudinary cloudinary;
 
 
     @Override
