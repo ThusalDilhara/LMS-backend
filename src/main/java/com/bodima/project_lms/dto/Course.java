@@ -36,5 +36,5 @@ public class Course {
     private String prerequisites;
     private String status;
     private List<Lesson> lessons;
-
+    private Set<String> students;
 }

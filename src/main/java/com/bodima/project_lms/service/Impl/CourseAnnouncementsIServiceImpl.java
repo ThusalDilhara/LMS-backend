@@ -31,7 +31,7 @@ public class CourseAnnouncementsIServiceImpl implements CourseAnnouncementsServi
             courseAnnouncements.setOriginalFileName(file.getOriginalFilename());
             courseAnnouncements.setFileType(file.getContentType());
             courseAnnouncements.setFileSize(file.getSize());
-
+            System.out.println(modelMapper.map(courseAnnouncements, CourseAnnouncementsMoel.class));
             courseAnnouncementsRepository.save(modelMapper.map(courseAnnouncements, CourseAnnouncementsMoel.class));
         }
     }

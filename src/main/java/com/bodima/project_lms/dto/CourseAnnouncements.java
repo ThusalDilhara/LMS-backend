@@ -1,12 +1,12 @@
 package com.bodima.project_lms.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
 public class CourseAnnouncements {
     private String id;
     private int courseId;
@@ -15,4 +15,12 @@ public class CourseAnnouncements {
     private String originalFileName;
     private String fileType;
     private long fileSize;
+    private String openDate;
+    private String closeDate;
+    private String contentMonth;
+    private String contentWeek;
+    private Boolean isAssignment;
+    private Boolean isNote;
+    private Boolean isAnnouncement;
+
 }

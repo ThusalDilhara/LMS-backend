@@ -20,5 +20,11 @@ public class CourseAnnouncementsMoel {
     private String originalFileName;
     private String fileType;
     private long fileSize;
-
+    private String openDate;
+    private String closeDate;
+    private String contentMonth;
+    private String contentWeek;
+    private Boolean isAssignment;
+    private Boolean isNote;
+    private Boolean isAnnouncement;
 }

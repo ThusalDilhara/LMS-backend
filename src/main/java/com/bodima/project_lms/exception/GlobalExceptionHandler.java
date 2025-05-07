@@ -10,9 +10,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.time.LocalDateTime;
 
 @ControllerAdvice
 @Slf4j
@@ -87,5 +90,14 @@ public class GlobalExceptionHandler {
             log.error(ex.getMessage());
             return new ResponseEntity<>(new ResponseDto("500", AppConstants.SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+    @ExceptionHandler(EntityAlreadyExistsException.class)
+    public ResponseEntity<ResponseDto> handleEntityAlreadyExistsException(EntityAlreadyExistsException ex) {
+        ex.printStackTrace();
+        log.error(ex.getMessage());
+        // Using OK status to prevent browser from showing default error
+        return new ResponseEntity<>(new ResponseDto("ERROR", ex.getMessage()), HttpStatus.OK);
     }
 }
