@@ -1,9 +1,9 @@
 package com.bodima.project_lms.service;
 
 import com.bodima.project_lms.dto.Course;
-import com.bodima.project_lms.dto.LessonRequest;
 
 import java.util.List;
+import java.util.Set;
 
 public interface CourseService {
     void addCourse(Course course);
@@ -16,8 +16,10 @@ public interface CourseService {
 
     List<Course> getCourcesByInstructorId(String id);
 
-    void enrollStudentForCourse(Integer studentId, Integer courseId);
-
+    public void enrollStudentForCourse(String studentId, String courseId);
     List<Course> getAllCourses();
+
+    Set<String> enrolledStudents(String courseId);
+
 
 }
