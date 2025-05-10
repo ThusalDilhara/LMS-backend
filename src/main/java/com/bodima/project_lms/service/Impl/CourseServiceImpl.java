@@ -1,7 +1,7 @@
 package com.bodima.project_lms.service.Impl;
 
 import com.bodima.project_lms.dto.Course;
-import com.bodima.project_lms.dto.LessonRequest;
+import com.bodima.project_lms.exception.types.EntityAlreadyExistsException;
 import com.bodima.project_lms.model.CourseEntity;
 import com.bodima.project_lms.repository.CourseRepository;
 import com.bodima.project_lms.service.CourseService;
@@ -9,11 +9,8 @@ import com.bodima.project_lms.service.SequenceGeneratorService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -66,9 +63,28 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void enrollStudentForCourse(Integer studentId, Integer courseId) {
-        //TODO must be implemented
+    public void enrollStudentForCourse(String studentId, String courseId) {
+        Optional<CourseEntity> courseOptional = courseRepository.findById(courseId);
+
+        if (courseOptional.isPresent()) {
+            CourseEntity course = courseOptional.get();
+
+            if (course.getStudents() == null) {
+                course.setStudents(new HashSet<>());
+            }
+
+            if (course.getStudents().contains(studentId)) {
+                throw new EntityAlreadyExistsException("Student is already enrolled in this course");
+            }
+
+            course.getStudents().add(studentId);
+
+            courseRepository.save(course);
+        } else {
+            throw new RuntimeException("Course not found with id: " + courseId);
+        }
     }
+
 
     @Override
     public List<Course> getAllCourses() {
@@ -78,9 +94,17 @@ public class CourseServiceImpl implements CourseService {
         return courseList;
     }
 
-//    @Override
-//    public Course addLesson(String courseId, LessonRequest lessonRequest, MultipartFile file, String token) throws IOException {
-//        return null;
-//    }
+    @Override
+    public Set<String> enrolledStudents(String id) {
+        Optional<CourseEntity> course = courseRepository.findById(id);
+        if(course.isPresent()) {
+            return course.get().getStudents() != null ? course.get().getStudents() : new HashSet<>();
+        }
+        return new HashSet<>();
+    }
+
+
+
+
 
 }

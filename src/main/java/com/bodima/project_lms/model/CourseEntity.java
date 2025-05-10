@@ -38,5 +38,6 @@ public class CourseEntity {
     private Double rating;
     private String status;
     private List<Lesson> lessons;
+    private Set<String> students;
 }
 

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -66,14 +67,16 @@ public class CourseController {
     }
 
     //Enroll a Student in a Course
-    @PostMapping("/enroll-student/{studentId}-for-course/{courseId}")
+    @PostMapping("/enroll-student/{studentId}/{courseId}")
     @ResponseStatus(HttpStatus.OK)
-    public void enrollStudentForCourse(@PathVariable Integer studentId, @PathVariable Integer courseId) {
-        courseService.enrollStudentForCourse(studentId, courseId);
+    public void enrollStudentForCourse(@PathVariable String studentId, @PathVariable String courseId) {
+        courseService.enrollStudentForCourse(studentId,courseId);
     }
 
-//    @PostMapping(value = "/{courseId}/lessons", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//    public ResponseEntity<Course> addLesson(
-//        return null;
-//    }
+    @GetMapping("/getAllStudentsAttendsToCourse/{courseId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Set<String> enrolledStudents(@PathVariable String courseId) {
+        return courseService.enrolledStudents(courseId);
+    }
+
 }

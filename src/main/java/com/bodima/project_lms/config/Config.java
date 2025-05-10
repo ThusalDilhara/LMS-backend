@@ -3,15 +3,13 @@ package com.bodima.project_lms.config;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
-public class ModelMapperConfig {
+public class Config {
     @Bean
-    public ModelMapper modelMapper() {
-        ModelMapper modelMapper = new ModelMapper();
-
-        // Customize ModelMapper configuration here if needed
-
-        return modelMapper;
+    @Primary
+    public ModelMapper getMapper(){
+        return new ModelMapper();
     }
 }
