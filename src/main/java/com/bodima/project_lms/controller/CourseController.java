@@ -56,6 +56,7 @@ public class CourseController {
     @GetMapping("search-course-by-title-or-catagory")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Course> getCourcesByTitleOrCatagory(@RequestParam String title, @RequestParam String catagory) {
+        System.out.println(title + " "+ catagory);
         return courseService.getCourcesByTitleOrCatagory(title, catagory);
     }
 
@@ -78,5 +79,6 @@ public class CourseController {
     public Set<String> enrolledStudents(@PathVariable String courseId) {
         return courseService.enrolledStudents(courseId);
     }
+
 
 }

@@ -88,6 +88,7 @@ public class JwtTokenUtil implements Serializable {
 		UserEntity user = authService.findUserByEmail(userDetails.getUsername());		if (user != null) {
 			claims.put("firstName", user.getFirstName());
 			claims.put("lastName",user.getLastName());
+			claims.put("id",user.getId());
 		}
 
 
