@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/lecturer")
-public class StudentController {
+public class LecturerController {
 
     @Autowired
     private LecturerService lecturerService;
@@ -21,7 +21,7 @@ public class StudentController {
     @PostMapping("/register-lecturer")
     // @PreAuthorize("hasRole('ADMIN')")
     public Lecturer registerLecturer(@RequestBody Lecturer lecturer) {
-        return lecturerService.registerStudent(lecturer);
+        return lecturerService.registerLecturer(lecturer);
     }
 
 
