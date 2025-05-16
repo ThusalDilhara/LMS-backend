@@ -2,8 +2,10 @@ package com.bodima.project_lms.service.Impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.bodima.project_lms.model.Lecturer;
 import com.bodima.project_lms.repository.LecturerRepository;
@@ -15,10 +17,26 @@ public class LecturerServiceImpl implements LecturerService {
 @Autowired
 private LecturerRepository lecturerRepository;
 
+private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
     @Override
     public Lecturer registerLecturer(Lecturer lecturer) {
-        // TODO Auto-generated method stub
-        return null;
+        if(lecturerRepository.existsByNic(lecturer.getNic())){
+            throw new RuntimeException("Lecturer already exists with NIC: " + lecturer.getNic());
+        }
+
+        String username = lecturer.getFirstName().toLowerCase() + "." + lecturer.getLastName().toLowerCase();
+        String rawPassword = UUID.randomUUID().toString().substring(0, 8); 
+        String encodedPassword = encoder.encode(rawPassword);
+
+        lecturer.setUsername(username);
+        lecturer.setPassword(encodedPassword);
+
+        Lecturer savedLecturer = lecturerRepository.save(lecturer);
+
+        return savedLecturer;
+
+
     }
 
     @Override
@@ -32,6 +50,7 @@ private LecturerRepository lecturerRepository;
             existingLecturer -> {
                 existingLecturer.setFirstName(lecturer.getFirstName());
                 existingLecturer.setLastName(lecturer.getLastName());
+                existingLecturer.setNic(lecturer.getNic());
                 existingLecturer.setEmail(lecturer.getEmail());
                 existingLecturer.setPhoneNumber(lecturer.getPhoneNumber());
                 existingLecturer.setAddress(lecturer.getAddress());

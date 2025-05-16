@@ -6,5 +6,5 @@ import com.bodima.project_lms.model.Lecturer;
 
 public interface LecturerRepository extends MongoRepository<Lecturer, String> {
     
-    
+    boolean existsByNic(String nic);
 }
