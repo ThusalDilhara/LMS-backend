@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.Set;
+
 
 @Data
 public class UserDto {
@@ -14,6 +16,7 @@ public class UserDto {
     private String createDateTime;
     private boolean verified;
     private boolean active;
+    private Set<String> enrolledCourses;
 
     @NotBlank(message = "Email is required!")
     @Pattern(regexp = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$", message = "Invalid email address!")
@@ -35,4 +38,6 @@ public class UserDto {
     @NotBlank(message = "Password is required!")
     @Size(min = 4, max = 255, message = "Password should have 4 to 255 characters")
     private String password;
+
+
 }

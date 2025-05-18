@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public interface CourseRepository extends MongoRepository<CourseEntity,String> {
 
-    List<Course> findByTitleOrCatagory(String title, String catagory);
 
     List<Course> findByInstructorId(String id);
-
+    
+    Iterable<Object> findByTitleStartingWith(String title, String catagory);
 }

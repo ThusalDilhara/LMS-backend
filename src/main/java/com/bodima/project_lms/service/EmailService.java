@@ -15,7 +15,7 @@ public class EmailService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
         message.setSubject("Welcome to the LMS - Your Login Credentials");
-        message.setText("Hello,\n\nYou've been registered to the LMS.\n\nUsername: " + username + "\nPassword: " + password + "\n\nPlease change your password after logging in.");
+        message.setText("Hello,\n\nYou've been registered to the SHILPA LMS.\n\nUsername: " + username + "\nPassword: " + password + "\n\nPlease change your password after logging in.");
 
         mailSender.send(message);
     }
