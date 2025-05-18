@@ -26,7 +26,7 @@ public class LecturerController {
 
 
 
-    @GetMapping("/get-all-students")
+    @GetMapping("/get-all-lecturers")
     // @PreAuthorize("hasRole('ADMIN')")
     public List<Lecturer> getAllLecturers() {
         return lecturerService.getAllLecturers();

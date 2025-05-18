@@ -1,6 +1,9 @@
 package com.bodima.project_lms.model;
 
 import lombok.*;
+
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -20,6 +23,7 @@ public class Student {
     private String lastName;
     private String address;
     private String city;
+    private String profilePic;
     private String phoneNumber;
     private String faculty;
     private String department;
@@ -27,4 +31,7 @@ public class Student {
     private String password; 
     private String role = "STUDENT";
     private boolean active = true;
+    private Date lastLogin;
+    private Date createdAt;
+    private Date updatedAt;
 }

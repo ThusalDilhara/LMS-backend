@@ -30,7 +30,7 @@ public class StudentServiceImpl implements StudentService {
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Override
-public Student registerStudent(Student student) {
+    public Student registerStudent(Student student) {
 
     // Check for duplicates
     if (studentRepository.existsByStudentNo(student.getStudentNo())) {
