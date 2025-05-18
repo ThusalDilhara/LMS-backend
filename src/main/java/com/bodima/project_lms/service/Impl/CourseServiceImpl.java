@@ -3,6 +3,8 @@ package com.bodima.project_lms.service.Impl;
 import com.bodima.project_lms.dto.Course;
 import com.bodima.project_lms.exception.types.EntityAlreadyExistsException;
 import com.bodima.project_lms.model.CourseEntity;
+import com.bodima.project_lms.model.UserEntity;
+import com.bodima.project_lms.repository.AuthRepository;
 import com.bodima.project_lms.repository.CourseRepository;
 import com.bodima.project_lms.service.CourseService;
 import com.bodima.project_lms.service.SequenceGeneratorService;
@@ -20,7 +22,7 @@ public class CourseServiceImpl implements CourseService {
     private final ModelMapper modelMapper;
     private final SequenceGeneratorService sequenceGenerator;
     private static final String COURSE_SEQUENCE_NAME = "course_sequence";
-
+    private final AuthRepository authRepository;
 
     @Override
     public void addCourse(Course course) {
@@ -41,24 +43,22 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getCoursesById(String courseId) {
         List<Course> courseList = new ArrayList<>();
-        courseRepository.findById(courseId).ifPresent(course ->
-                courseList.add(modelMapper.map(course, Course.class)));
+        courseRepository.findById(courseId).ifPresent(course -> courseList.add(modelMapper.map(course, Course.class)));
         return courseList;
     }
 
     @Override
     public List<Course> getCourcesByTitleOrCatagory(String title, String catagory) {
         List<Course> courseList = new ArrayList<>();
-        courseRepository.findByTitleOrCatagory(title, catagory).forEach(course ->
-                courseList.add(modelMapper.map(course, Course.class)));
-        return List.of();
+        courseRepository.findByTitleStartingWith(title, catagory).forEach(course -> courseList.add(modelMapper.map(course, Course.class)));
+        return courseList;
     }
+
 
     @Override
     public List<Course> getCourcesByInstructorId(String id) {
         List<Course> courseList = new ArrayList<>();
-        courseRepository.findByInstructorId(id).forEach(course ->
-                courseList.add(modelMapper.map(course, Course.class)));
+        courseRepository.findByInstructorId(id).forEach(course -> courseList.add(modelMapper.map(course, Course.class)));
         return courseList;
     }
 
@@ -72,14 +72,30 @@ public class CourseServiceImpl implements CourseService {
             if (course.getStudents() == null) {
                 course.setStudents(new HashSet<>());
             }
+            course.getStudents().add(studentId);
+            courseRepository.save(course);
 
             if (course.getStudents().contains(studentId)) {
                 throw new EntityAlreadyExistsException("Student is already enrolled in this course");
             }
 
-            course.getStudents().add(studentId);
+            //add courseId to user
 
-            courseRepository.save(course);
+            Optional<UserEntity> userOptional = authRepository.findById(studentId);
+            if (userOptional.isEmpty()) {
+                return;
+            }
+            UserEntity userEntity = userOptional.get();
+            userEntity.getEnrolledCourses().add(courseId);
+            System.out.println("okay");
+            authRepository.save(userEntity);
+
+
+            if (userEntity.getEnrolledCourses().contains(courseId)) {
+                throw new EntityAlreadyExistsException("Student is already enrolled in this course");
+            }
+
+
         } else {
             throw new RuntimeException("Course not found with id: " + courseId);
         }
@@ -89,22 +105,18 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getAllCourses() {
         List<Course> courseList = new ArrayList<>();
-        courseRepository.findAll().forEach(course ->
-                courseList.add(modelMapper.map(course, Course.class)));
+        courseRepository.findAll().forEach(course -> courseList.add(modelMapper.map(course, Course.class)));
         return courseList;
     }
 
     @Override
     public Set<String> enrolledStudents(String id) {
         Optional<CourseEntity> course = courseRepository.findById(id);
-        if(course.isPresent()) {
+        if (course.isPresent()) {
             return course.get().getStudents() != null ? course.get().getStudents() : new HashSet<>();
         }
         return new HashSet<>();
     }
-
-
-
 
 
 }

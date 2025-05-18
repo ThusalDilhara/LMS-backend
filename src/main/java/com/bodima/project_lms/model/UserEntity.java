@@ -1,13 +1,19 @@
 package com.bodima.project_lms.model;
 
-import lombok.Data;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Document(collection = "users")
 public class UserEntity {
 
@@ -23,4 +29,5 @@ public class UserEntity {
     private Boolean verified;
     private String role;
     private Date createDateTime = new Date();
+    private Set<String> enrolledCourses = new HashSet<>();
 }

@@ -5,7 +5,9 @@ import com.bodima.project_lms.dto.ResponseDto;
 import com.bodima.project_lms.dto.UserDto;
 import com.bodima.project_lms.model.UserEntity;
 import com.bodima.project_lms.repository.AuthRepository;
+import com.bodima.project_lms.service.SequenceGeneratorService;
 import com.bodima.project_lms.util.Utilities;
+import jakarta.persistence.SequenceGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class AuthService {
 
     @Autowired
     private JwtAuthenticationController authenticationController;
+
+
 
     public UserEntity findValidUserByEmail(String email) {
         return authRepository.findFirstByEmailAndActiveTrueAndVerifiedTrue(email);
@@ -51,7 +55,9 @@ public class AuthService {
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
             user.setVerifyCode(verifyCode);
             user.setCreateDateTime(new Date());
+            user.setId("2");
             user = authRepository.save(user);
+
             return new ResponseDto("success","200",null);
         }
     }
