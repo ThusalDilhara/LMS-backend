@@ -70,7 +70,9 @@ public class JwtRequestFilter extends OncePerRequestFilter { // OncePerRequestFi
     // after request check header
     @Override
     protected void doFilterInternal(jakarta.servlet.http.HttpServletRequest request, jakarta.servlet.http.HttpServletResponse response, jakarta.servlet.FilterChain filterChain) throws jakarta.servlet.ServletException, IOException {
-        final String requestTokenHeader = request.getHeader("Authorization");
+        
+        
+    final String requestTokenHeader = request.getHeader("Authorization");
         //debugging
         System.out.println("Auth header received: " + request.getHeader("Authorization"));
         String username = null;
