@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 public class Lecturer {
     @Id
     private String id;
+    private String nic;
     private String firstName;
     private String lastName;
     private String email;
