@@ -9,6 +9,8 @@ import com.bodima.project_lms.model.UserEntity;
 import com.bodima.project_lms.service.Impl.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +25,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/auth/api/v1")
 public class AuthAPI {
 
+    private final ModelMapper modelMapper;
     @Autowired
     private JwtAuthenticationController jwtAuthenticationController;
 
@@ -46,19 +50,28 @@ public class AuthAPI {
         //get user with some details (any)
         UserEntity user = authService.findUserByEmail(authDto.getEmail());
         Map<String,Object> map = new HashMap<>();
+        map.put("id", user.getId());
         map.put("firstName", user.getFirstName());
         map.put("lastName", user.getLastName());
         map.put("role", user.getRole());
         map.put("email", user.getEmail());
+        map.put("profilePic", user.getProfilePic());
         map.put("token", jwtResponse.getToken());
-
         return new ResponseEntity<>(new ResponseDto("success","200", map),HttpStatus.OK);
     }
 
     @PostMapping("/signUp")
     public ResponseEntity<ResponseDto> signUp(@Valid @RequestBody UserDto userDto) throws Exception{
         //save user in db // if want add more thngs eg-: encrypt passwords ... etc
-        return new ResponseEntity<>(authService.signUp(userDto), HttpStatus.OK);
+        try {
+            UserEntity registeredUser = authService.registerUser(userDto);
+            // You might want to return the created user DTO or just a success message
+            UserDto responseUserDto = modelMapper.map(registeredUser, UserDto.class);
+            return new ResponseEntity<>(new ResponseDto("success", "200", responseUserDto), HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            // Catch specific exceptions for better error handling
+            return new ResponseEntity<>(new ResponseDto("error", "400", e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/refreshToken")
