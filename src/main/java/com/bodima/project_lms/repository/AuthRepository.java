@@ -7,12 +7,20 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AuthRepository extends MongoRepository<UserEntity, String> {
 
     UserEntity findFirstByEmailAndActiveTrueAndVerifiedTrue(String email);
 
-    UserEntity findByEmail(String email);
+    Optional<UserEntity> findByEmail(String email);
+
+    boolean existsByEmail(String email);
+
+    boolean existsByNicAndRole(String nic, String role);
+
+    List<UserEntity> findByRole(String role); // For fetching users by role without pagination
+
 
     // Updated method name to match MongoDB naming conventions
     List<UserEntity> findByFirstName(String name);
@@ -30,4 +38,6 @@ public interface AuthRepository extends MongoRepository<UserEntity, String> {
     // This returns MongoDB Document objects instead of Object[]
     @Query(value = "{ $group: { _id: '$role', count: { $sum: 1 } } }")
     List<org.bson.Document> countUsersByRole();
+
+    boolean existsByStudentNoAndRole(String studentNo, String student);
 }
